@@ -1,0 +1,236 @@
+body {
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #24292e;
+    background-color: #fff;
+    margin: 0;
+    padding:0;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+	.content{
+		max-width: 1280px;
+		margin: auto;
+		padding:24px 16px;
+		display: flex;
+		@include sm {
+			flex-direction:column;
+			.content-left-block,.content-right-block{
+		    	width:100%;
+		    }
+		}
+		
+	    @include lg {
+	    	flex-direction:row;
+	    	flex-wrap:nowrap;
+	    	.content-left-block{
+		    	padding-right:16px;
+		        width:25%;
+		        max-width:270px;
+		        margin-right: auto;
+		    }
+		    .content-right-block{
+		    	padding-left:8px;
+		        width:75%;
+		        margin-left: auto;
+		    }
+		} 
+
+		.content-right-block{
+			.react-tabs__tab-list {
+			    display: flex;
+			    flex-wrap: nowrap;
+			    overflow-x: auto !important;
+			    overflow-y: hidden;
+			    margin-bottom: 0;
+			}
+			.react-tabs__tab{
+				display: flex;
+				flex-wrap:nowrap;
+				padding: 16px 8px;
+			    margin-right: 16px;
+			    font-size: 14px;
+			    line-height: 1.5;
+			    color: #586069;
+			    text-align: center;
+			    border-bottom: 2px solid transparent;
+			}
+			.react-tabs__tab--selected{
+				bottom:0px !important;
+				border:none;
+				border-bottom: 2px solid #e36209;
+				box-shadow: none !important;
+
+				&::after{
+					display: none;
+				}
+			}
+
+			.counter {
+			    display: inline-block;
+			    padding: 2px 5px;
+			    font-size: 12px;
+			    font-weight: 600;
+			    line-height: 1.5;
+			    color: #586069;
+			    background-color: rgba(27,31,35,.08);
+			    border-radius: 20px;
+			    margin-left: 5px;
+			}
+
+			.filter-block{
+				@include sm {
+					display:block;
+					.filter-search{
+						width:97%;
+						margin-bottom: 16px;
+					}
+					
+					.d-flex{
+				    	display:inline-flex;
+						
+						.filter-dropdown{
+							width:100%;
+						}
+					}
+				}
+				
+			    @include lg {
+			    	display: flex;
+					flex-direction:row;
+					flex-wrap:nowrap;
+					.filter-search{
+						width:98%;
+						margin-right:16px;
+					}
+					.d-flex{
+				    	display:flex;
+				    	width:auto;
+				    	margin-left:auto;
+						
+						.filter-dropdown{
+							width:auto;
+						}
+					}
+				} 
+			}
+
+			.filter-message-block{
+				display: flex;
+				.filter-message{
+					margin-right: auto;
+				}
+				.filter-clear-button{
+					margin-left: auto;
+					width:auto !important;
+					background: #fff !important;
+					border:none !important;
+					&:hover{
+						color: #0366d6;
+					}
+				}
+			}
+
+			.row-item{
+				padding:16px 0;
+				border-bottom: 1px solid #e1e4e8!important;
+			}
+
+			ul.tab-list{
+				list-style: none;
+				padding: 0;
+				margin: 0;
+				.list-item-title{
+					font-size: 20px;
+					margin:0;
+					a{
+						color: #0366d6;
+						text-decoration: none;
+					}
+					&:hover{
+						text-decoration: underline;
+					}
+				}
+				.list-item-label,.list-item-bottom{
+					a{
+						color: #586069;
+				    	text-decoration: none;
+				    	&:hover{
+							color: #0366d6;
+						}
+					}
+				}
+
+				.octicon,.list-item-description,.list-item-label{
+					color: #586069;
+				}
+
+				.octicon{
+					&:hover{
+						color: #0366d6;
+					}
+				}
+
+				.list-item-label{
+					font-size: 12px;
+					margin-bottom: 4px;
+				}
+
+				.list-item-description{
+					margin-bottom: 8px;
+				}
+
+				.list-item-bottom{
+					.list-bottom-span{
+						margin-right: 16px;
+						color: #586069;
+						font-size: 12px;
+					}
+
+					.repo-language-color {
+						margin-right: 4px !important;
+					    position: relative;
+					    top: 1px;
+					    display: inline-block;
+					    width: 12px;
+					    height: 12px;
+					    border-radius: 50%;
+					    &.JavaScript{
+					    	background-color: #f1e05a;
+					    }
+					    &.HTML{
+					    	background-color: #e34c26;
+					    }
+					    &.CSS{
+					    	background-color: #563d7c;
+					    }
+					}
+				}
+			}
+		}
+	}
+
+	
+	.loader-container{
+	  background-color:#2E2E92;
+	  height:100vh;
+	  width:100vw;
+	  display: flex;
+	  flex-direction:column;
+	  justify-content:center;
+	  align-items:center;
+
+	  .loader-title{
+	    color:#fff;
+	    text-align: center;
+	    font-size: 20px;
+	    font-weight: 700;
+	  }
+
+	  img{
+	  	height:auto;
+	  	width:50%;
+	  }
+	}
+}

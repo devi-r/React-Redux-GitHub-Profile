@@ -9,6 +9,7 @@ import RowListItem from '../components/RowListItem.jsx';
 import Button from '../components/Button.jsx';
 import {tabArray,typeArray,languageArray} from '../variables/Variables.jsx';
 import Octicon, {Star,Law,X,Repo} from '@primer/octicons-react';
+import Loader from "../components/Loader.jsx";
 
 
 class ProfilePage extends Component {
@@ -23,11 +24,17 @@ class ProfilePage extends Component {
       "searchFilter":"",
       "typeFilter":"All",
       "languageFilter":"All",
-      "filterOpen" : false
+      "filterOpen" : false,
+      "loader_show":false,
+      "loader_action":'',
     }  
   }
 
   componentDidMount(){
+    this.setState({
+      loader_show:true,
+      loader_action:'LOADING'
+    });
     let UserPopulateAPI = "https://api.github.com/users/supreetsingh247";
     fetch(UserPopulateAPI,{
       method:'GET',
@@ -58,7 +65,9 @@ class ProfilePage extends Component {
       .then(data =>{
         this.setState({
           repos : data,
-          filteredRepos : data
+          filteredRepos : data,
+          loader_show:false,
+          loader_action:''
         });
       });
   }
@@ -80,7 +89,6 @@ class ProfilePage extends Component {
         let filtered = false;
     
         if(this.state.searchFilter){
-          console.log('has search')
           filtering_array = filtering_array.filter((repo) =>{      
             let lowerRepoName = String(repo.name).toLowerCase();        
             let lowerSearchFilter = String(this.state.searchFilter).toLowerCase();
@@ -90,7 +98,6 @@ class ProfilePage extends Component {
         }
 
         if(this.state.typeFilter !== 'All'){
-          console.log('has type')
           filtering_array = filtering_array.filter((repo) =>{ 
             if(this.state.typeFilter === 'All'){
               filtered = true;
@@ -109,7 +116,6 @@ class ProfilePage extends Component {
         }
         
         if(this.state.languageFilter !== 'All'){
-          console.log('has lang')
           filtering_array = filtering_array.filter((repo) =>{
             if(this.state.languageFilter === 'All'){
               filtered = true;
@@ -121,118 +127,131 @@ class ProfilePage extends Component {
           }) 
         }
 
-        this.setState({
-          filteredRepos: filtering_array
-        },
-          ()=>{
-            console.log(this.state)
-          }
-        );
+        this.setState({filteredRepos: filtering_array});
       },0);
   }
 
 
   render() {
     return (
-      <div className="content">
-        <div className="user-details">
-          <User userDetails={this.state.user} />
-        </div>
+      <div className="content-block">
+        { this.state.loader_show ?
+          <Loader showLoader={this.state.loader_show} action={this.state.loader_action}/>
+        :
+        <div className="content">
+          <div className="content-left-block">
+            <User userDetails={this.state.user} />
+          </div>
 
-        <div className="user-navbar">
-          <Tabs selectedIndex={this.state.tabIndex} onSelect={tabIndex => this.setState({ "tabIndex" : 1 })}>
-            <TabList>
-              {tabArray.map((tabname,index) => {
-                return <Tab key={`repo_${index}`}>{tabname}</Tab>
-              })
-            }
-            </TabList>
+          <div className="content-right-block">
+            <Tabs selectedIndex={this.state.tabIndex} onSelect={tabIndex => this.setState({ "tabIndex" : 1 })}>
+              <TabList>
+                {tabArray.map((tabname,index) => {
+                  return (
+                    <Tab key={`repo_${index}`}>
+                    {tabname}
+                      {(this.state.tabIndex === index) ? <span className="counter">{this.state.repos.length}</span>: null}
+                    </Tab>
+                  )
+                })
+              }
+              </TabList>
 
-            <div className="filter-block">
-              <SearchInput name="searchFilter" defaultValue={this.state.searchFilter} changeEvent={this.handleFilterChange} />
-              <DropDownInput name="typeFilter" title="type" options={typeArray} defaultOption={this.state.typeFilter} defaultOpen={this.state.filterOpen} changeEvent={this.handleFilterChange} clearFilter={this.state.handleResetFilter} />
-              <DropDownInput name="languageFilter" title="language" options={languageArray} defaultOption={this.state.languageFilter} defaultOpen={this.state.filterOpen} changeEvent={this.handleFilterChange}  clearFilter={this.state.handleResetFilter} />
-              <Button data="New" icon={Repo} />
-            </div>
-
-            {(this.state.searchFilter || (this.state.typeFilter !== 'All') || (this.state.languageFilter !== 'All')) && 
-              <div className="filter-message-block">
-                <div className="filter-message">
-                  {this.state.filteredRepos.length} results found for 
-                  {` ${(this.state.typeFilter !== 'All') ? this.state.typeFilter:''} `}repositories 
-                  {this.state.searchFilter ? ` matching ${this.state.searchFilter}` : ''} 
-                  {(this.state.languageFilter !== 'All') ? ` written in ${this.state.languageFilter}` : ''}
+              <div className="filter-block row-item">
+                <SearchInput className="filter-search" name="searchFilter" defaultValue={this.state.searchFilter} changeEvent={this.handleFilterChange} />
+                <div className="d-flex">
+                  <DropDownInput className="filter-dropdown" name="typeFilter" title="type" options={typeArray} defaultOption={this.state.typeFilter} defaultOpen={this.state.filterOpen} changeEvent={this.handleFilterChange} clearFilter={this.state.handleResetFilter} />
+                  <DropDownInput className="filter-dropdown" name="languageFilter" title="language" options={languageArray} defaultOption={this.state.languageFilter} defaultOpen={this.state.filterOpen} changeEvent={this.handleFilterChange}  clearFilter={this.state.handleResetFilter} />
+                  <Button data="New" icon={Repo} />
                 </div>
-                <Button data="Clear filter" icon={X} clickEvent={this.handleResetFilter}/>
               </div>
-            }
 
-            <TabPanel>
-              <h2>No content</h2>
-            </TabPanel>
+              {(this.state.searchFilter || (this.state.typeFilter !== 'All') || (this.state.languageFilter !== 'All')) && 
+                <div className="filter-message-block row-item">
+                  <div className="filter-message">
+                    {this.state.filteredRepos.length} results found for 
+                    {` ${(this.state.typeFilter !== 'All') ? this.state.typeFilter:''} `}repositories 
+                    {this.state.searchFilter ? ` matching ${this.state.searchFilter}` : ''} 
+                    {(this.state.languageFilter !== 'All') ? ` written in ${this.state.languageFilter}` : ''}
+                  </div>
+                  <Button className="filter-clear-button" data="Clear filter" icon={X} clickEvent={this.handleResetFilter}/>
+                </div>
+              }
 
-            <TabPanel>
-              <div className="tab-data">
-                {
-                this.state.filteredRepos.length ?
-                  <ul>
-                    {this.state.filteredRepos.map((repo) =>{
-                      return (
-                        <RowListItem key={repo.id} item={repo} >
-                          <h3>
-                            <a href={repo.html_url} target="blank">
-                            {repo.name}</a>
-                          </h3>
-                          {repo.fork ? 
-                            <div>Forked from <a href={repo.forks_url} target="blank">
-                            {repo.forks_url}</a></div>
-                            : null}
-                          <div>{repo.description}</div>
-                          <div>
-                            <span>{repo.language}</span>
-                            {repo.stargazers_count ? 
-                              <a href={repo.stargazers_url} target="blank">
-                                <Octicon icon={Star}/>
-                                {repo.stargazers_count}
-                              </a>
-                            : null}
+              <TabPanel>
+                <h2>No content</h2>
+              </TabPanel>
 
+              <TabPanel>
+                <div className="tab-data">
+                  {
+                  this.state.filteredRepos.length ?
+                    <ul className="tab-list">
+                      {this.state.filteredRepos.sort( (a, b) => new Date(b.pushed_at) - new Date(a.pushed_at) ).map((repo) =>{
+                        return (
+                          <RowListItem key={repo.id} item={repo} >
+                            <h3 className="list-item-title">
+                              <a href={repo.html_url} target="blank">
+                              {repo.name}</a>
+                            </h3>
+                            {repo.fork ? 
+                              <div className="list-item-label">Forked</div>
+                              : null}
+                            <div className="list-item-description">{repo.description}</div>
+                            <div className="list-item-bottom">
+                              {repo.language ?
+                                <span className="list-bottom-span">  
+                                  <span className={`repo-language-color ${repo.language}`}></span>
+                                  <span>{repo.language}</span>
+                                </span>
+                              : null}
 
-                            
-                            {repo.license ? 
-                              <span>
-                                <Octicon icon={Law}/>
-                                 {repo.license.name}
+                              {repo.stargazers_count ?
+                                <span className="list-bottom-span"> 
+                                  
+                                    <Octicon icon={Star}/>
+                                    {repo.stargazers_count}
+                                  
+                                </span>
+                              : null}
+
+                    
+                              {repo.license ? 
+                                <span className="list-bottom-span">
+                                  <Octicon icon={Law}/>
+                                   {repo.license.name}
+                                </span>
+                              : null}
+
+                              <span className="list-bottom-span"> Updated on 
+                                {` ${moment(repo.pushed_at).format('DD MMM YYYY')}`}
                               </span>
-                            : null}
+                            </div>
+                          </RowListItem>
+                        )
+                      })}
+                    </ul>
+                    : `${this.state.user.login} doesn't have any repositories that match.`
+                  }
+                </div>
+              </TabPanel>
 
-                            <span> Updated on 
-                              {moment(repo.updated_at).format('DD MMM YYYY')}
-                            </span>
-                          </div>
-                        </RowListItem>
-                      )
-                    })}
-                  </ul>
-                  : `${this.state.user.login} doesn't have any repositories that match.`
-                }
-              </div>
-            </TabPanel>
-
-            <TabPanel>
-              <h2>No content</h2>
-            </TabPanel>
-            <TabPanel>
-              <h2>No content</h2>
-            </TabPanel>
-            <TabPanel>
-              <h2>No content</h2>
-            </TabPanel>
-            <TabPanel>
-              <h2>No content</h2>
-            </TabPanel>
-          </Tabs>
+              <TabPanel>
+                <h2>No content</h2>
+              </TabPanel>
+              <TabPanel>
+                <h2>No content</h2>
+              </TabPanel>
+              <TabPanel>
+                <h2>No content</h2>
+              </TabPanel>
+              <TabPanel>
+                <h2>No content</h2>
+              </TabPanel>
+            </Tabs>
+          </div>
         </div>
+        }
       </div>
     );
   }
