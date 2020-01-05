@@ -115,6 +115,7 @@
 			    display: flex;
 			    align-items: center;
 			    width: 100%;
+			    max-width: 270px;
 			    padding: 8px 16px;
 			    overflow: hidden;
 			    color: #586069;
@@ -127,7 +128,8 @@
 
 			    label{
 			    	cursor: pointer;
-			    	width:100%;
+			    	width:90%;
+			    	max-width: 270px;
 			    }
 
 			    .check-icon{

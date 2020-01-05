@@ -114,6 +114,21 @@ body {
 						}
 					}
 				} 
+
+				.new-button{
+					color:#fff;
+					border-color: transparent;
+					background-color: #33C15B;
+					background-image: none;
+
+					&:hover,&.active{
+						color:#fff;
+						border-color: transparent;
+						background-color: #33C15B;
+						background-image: none;
+						opacity:0.8;
+					}
+				}
 			}
 
 			.filter-message-block{

@@ -31,7 +31,7 @@ export class RightContent extends Component {
 		        <div className="d-flex">
 		          <DropDownInput className="filter-dropdown" name="typeFilter" title="type" options={typeArray} defaultOption={this.props.content.state.typeFilter} defaultOpen={this.props.content.state.filterOpen} changeEvent={this.props.content.handleFilterChange} clearFilter={this.props.content.handleResetFilter} />
 		          <DropDownInput className="filter-dropdown" name="languageFilter" title="language" options={languageArray} defaultOption={this.props.content.state.languageFilter} defaultOpen={this.props.content.state.filterOpen} changeEvent={this.props.content.handleFilterChange}  clearFilter={this.props.content.handleResetFilter} />
-		          <Button data="New" icon={Repo} />
+		          <Button data="New" icon={Repo} className="new-button" />
 		        </div>
 		      </div>
 
