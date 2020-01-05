@@ -5,6 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 2. Only Repositories tab is active.
 3. GitHub apis used to fetch user data and list of repositories.
 
+Demo : https://devi-react-github-profile.herokuapp.com
 
 ## Getting Started
 ### Prerequisites
