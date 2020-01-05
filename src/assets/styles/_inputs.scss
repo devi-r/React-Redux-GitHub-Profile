@@ -25,6 +25,7 @@
 		    border-right: 4px solid transparent;
 		    border-bottom: 0 solid transparent;
 		    border-left: 4px solid transparent;
+		    margin-left: 5px;
 		}
 
 		.SelectMenu {
@@ -123,6 +124,11 @@
 			    border: 0;
 			    border-bottom: 1px solid #eaecef;
 			    cursor: pointer;
+
+			    label{
+			    	cursor: pointer;
+			    	width:100%;
+			    }
 
 			    .check-icon{
 			    	width:16px;

@@ -126,8 +126,25 @@ body {
 					width:auto !important;
 					background: #fff !important;
 					border:none !important;
+					font-weight: 300;
+					color: #586069;
 					&:hover{
 						color: #0366d6;
+
+						.clear-icon {
+							background:#0366d6;
+						}
+					}
+
+					.clear-icon {
+					    width: 16px;
+					    height: 16px;
+					    padding: 1px;
+					    margin-right: 8px;
+					    color: #fff;
+					    text-align: center;
+					    background-color: #6a737d;
+					    border-radius: 3px;
 					}
 				}
 			}
@@ -208,6 +225,14 @@ body {
 					}
 				}
 			}
+		}
+
+		.no-alert{
+			text-align: center;
+			padding: 32px;
+			margin-top: 32px;
+			font-size: 16px;
+			font-weight: 600;
 		}
 	}
 

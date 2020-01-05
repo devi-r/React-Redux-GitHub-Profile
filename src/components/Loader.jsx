@@ -8,7 +8,6 @@ class Loader extends Component {
       <div>
         {this.props.showLoader ?
           <div className="loader-container">
-            <div className="loader-title">{this.props.action} ...</div>
             <img src={loader} alt="loader ..."/>
           </div>
         :null}
