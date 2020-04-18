@@ -1,7 +1,7 @@
-# React-GitHub-Profile
+# React-Redux-GitHub-Profile
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-1. This is a basic implementation of React GitHub Profile page with bare minimum funtionalities only on the client side.
+1. Basic implementation of GitHub Profile page using React and Redux, with bare minimum funtionalities only on the client side.
 2. Only Repositories tab is active.
 3. GitHub apis used to fetch user data and list of repositories.
 
